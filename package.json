@@ -34,7 +34,14 @@
     "pree2e:protractor": "wait-on http-get://localhost:4200/ && protractor ./protractor.conf.js",
     "e2e": "npm-run-all -p pree2e:build pree2e:protractor"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.4",
+    "@fortawesome/fontawesome-free-webfonts": "^1.0.4",
+    "@types/roslib": "^0.18.3",
+    "foundation-sites": "^6.4.4-rc1",
+    "leapjs": "^0.6.4",
+    "roslib": "git://github.com/RobotWebTools/roslibjs.git#develop"
+  },
   "devDependencies": {
     "@angular/cli": "1.7.1",
     "@angular/common": "5.2.5",

@@ -1,0 +1,51 @@
+.grid {
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    grid-template-rows:50px  1fr auto;
+
+    .title {
+        z-index: 99;
+        color: white;
+        display: flex;
+        
+        justify-content: space-between;
+        align-items: center;
+
+        width: 100%;
+        
+        h1 {
+            font-weight: bold;
+        }
+
+        h2 {
+            width: 100px;
+        }
+        
+        padding: 20px;
+        grid-row: -2/-1;
+        grid-column: 1/-1;
+        //  background-color: rgba(0,0,0,0.5);
+    }
+
+    img {
+        grid-row: 1/-1;
+        grid-column: 1/-1;
+    }
+
+    .my-form, .stream {
+        padding: 40px;
+        background-color: rgba(0,0,0,0.7);
+        color: white;
+        grid-row: 2/3;
+        grid-column: 2/3;
+        z-index: 1000;
+    }
+
+    .stream {
+        img {
+            height: 250px;
+        }
+        
+    }
+}
+

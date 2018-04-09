@@ -1,0 +1,26 @@
+
+<div class="grid">
+  <img src="./assets/main.jpg" alt="">
+
+  <div class="title">
+    <h1>
+      Ordine Ingegneri 
+    </h1>
+  
+  </div>
+
+
+  <div *ngIf="!connected" class="my-form">
+    <h2>Insert Robot IP</h2>
+    <form>
+        <input [(ngModel)]="ip" type="text" name="ip" enabled placeholder="192.168.0.1" />
+        <button (click)="connect()" class="button"> Connect to Robot </button>
+    </form>
+  </div>
+
+  <div *ngIf="connected" class="stream">
+    <img src="http://{{ip}}:8080/stream?topic=/usb_cam/image_raw" alt="">
+  </div>
+
+</div>
+

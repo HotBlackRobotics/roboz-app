@@ -22,7 +22,12 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css",
+        "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css",
+        "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css",
+        "../node_modules/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css",
+        "../node_modules/foundation-sites/dist/css/foundation.min.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
