@@ -17,7 +17,7 @@ export class MainComponent implements OnInit {
   cmd_topic: Topic;
   pos: number = 0;
 
-  COMMAND_ALLOWED = ['a', 'd', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+  COMMAND_ALLOWED = ['a', 'd', 'w', 's', 'q', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 
   constructor() { }
 
@@ -42,12 +42,7 @@ export class MainComponent implements OnInit {
 
     this.ros.on('connection', () => {
       this.connected = true;
-      this.topic = new Topic({
-        ros: this.ros,
-        name: '/servo',
-        messageType: 'std_msgs/UInt8'
-      });
-      this.topic.advertise();
+
 
       this.cmd_topic = new Topic({
         ros: this.ros,
@@ -78,14 +73,6 @@ export class MainComponent implements OnInit {
       }
     });
 
-    setInterval(() => {
-      if (this.topic) {
-        let msg = new Message({
-          data: this.rad
-        });
-        this.topic.publish(msg);  
-      }
-    }, 33);
 
     console.log(Leap);
   
