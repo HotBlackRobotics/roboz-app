@@ -3,23 +3,42 @@
   <img src="./assets/main.jpg" alt="">
 
   <div class="title">
-    <h1>
-      Ordine Ingegneri 
-    </h1>
-  
+    <h1>Il Mago di Roboz </h1>
   </div>
 
 
   <div *ngIf="!connected" class="my-form">
-    <h2>Insert Robot IP</h2>
+    <h2>Inserisci l'IP del robot</h2>
     <form>
-        <input [(ngModel)]="ip" type="text" name="ip" enabled placeholder="192.168.0.1" />
+        <input [(ngModel)]="ip" type="text" name="ip" enabled placeholder="192.168.0.1"/>
         <button (click)="connect()" class="button"> Connect to Robot </button>
     </form>
   </div>
 
-  <div *ngIf="connected" class="stream">
-    <img src="http://{{ip}}:8080/stream?topic=/usb_cam/image_raw" alt="">
+  <div *ngIf="connected" class="dashboard">
+    <div class="stream">
+        <img src="http://{{ip}}:8080/stream?topic=/usb_cam/image_raw" alt="">
+    </div>
+    <div class="head">
+        <div>
+            <h3> Controllo Bocca </h3>
+            <p> volume = {{ volume }}</p>
+            <button class="button" (click)="toggleVolume()"> 
+              <span *ngIf="volumeOn"> Spegni Audio </span> 
+              <span *ngIf="!volumeOn"> Accendi Audio </span> 
+            </button>
+        </div>
+        <div>
+            <h3> Controllo Occhi </h3>
+            <input type="range" min="1" max="290" value="50" class="slider" id="myRange" (input)="setLed($event)"> 
+            <div>
+              <button class="button" style="background-color: red" (click)="setLedValue(180)">Rosso</button>
+              <button class="button" style="background-color: green" (click)="setLedValue(0)">Verde</button>
+              <button class="button" style="background-color: blue" (click)="setLedValue(60)">Blue</button>    
+            </div>
+        </div>
+
+    </div>
   </div>
 
 </div>

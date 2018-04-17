@@ -10,7 +10,6 @@
     ]
   },
   "mac": {
-    "icon": "dist",
     "target": [
       "dmg"
     ]
