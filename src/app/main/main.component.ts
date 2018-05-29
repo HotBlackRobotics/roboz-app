@@ -71,7 +71,7 @@ export class MainComponent implements OnInit {
 
   public rad: number = 0;
   ip: string = "virgil01.local";
-  connected:boolean = false;
+  connected:boolean = true;
   ros: Ros;
   topic: Topic;
   cmd_topic: Topic;
@@ -79,9 +79,10 @@ export class MainComponent implements OnInit {
   audioContext: any;
   volume: number = 0;
   led_topic: Topic;
+  volume_meter = 0;
   volumeOn: boolean = false;
 
-  COMMAND_ALLOWED = ['a', 'd', 'w', 's', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+  COMMAND_ALLOWED = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 
   constructor() { 
     this.runAudio();
@@ -115,13 +116,19 @@ export class MainComponent implements OnInit {
   getVolume(meter) {
     if (this.volumeOn) {
       this.volume = meter.volume;
-      let cmd = Math.ceil(this.volume*400);
+      let cmd = Math.ceil(this.volume*2*this.volume_meter);
       if (cmd > 180) cmd = 180;
       if (cmd < 0) cmd = 0;
       if (this.topic !== undefined) {
         this.topic.publish(new Message( {
           data: cmd
           }));
+      }
+      if (this.led_topic !== undefined) {
+        this.led_topic.publish( new Message ({
+            data: Math.ceil(meter.volume*500)
+          })
+        )
       }
     }
   }
@@ -141,10 +148,12 @@ export class MainComponent implements OnInit {
   }
 
   setLed(e) {
+    this.volume_meter = e.target.value;
     this.setLedValue(+e.target.value)
   }
 
   setLedValue(value) {
+
     if (this.led_topic != undefined ){
       this.led_topic.publish( new Message({
         data: value
@@ -155,15 +164,24 @@ export class MainComponent implements OnInit {
   
 
   @HostListener('document:keydown', ['$event'])
+  @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
+    console.log(event.type);
     if (this.cmd_topic !== undefined) {
       if (this.COMMAND_ALLOWED.indexOf(event.key) != -1) {
+        let data;
+        if (event.type == 'keydown') {
+          data = event.key;
+        } else {
+          data = 'stop';
+        }
         this.cmd_topic.publish(new Message({
-          data: event.key
-        }))
+          data: data
+        }));
       }
     }
   }
+
 
   connect() {
     this.ros = new Ros({
